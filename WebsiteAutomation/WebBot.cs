@@ -18,8 +18,7 @@ namespace WebsiteAutomation
         {
             #if DEBUG
             System.Diagnostics.Debug.WriteLine("[*] Initializing WebBrowserInstance ");
-            #endif
-
+#endif
             this.HiddenInstanceRoutine = new HiddenInstanceRoutine(URL);
             this.VisibleInstanceRoutine = new VisibleInstanceRoutine(URL);
 

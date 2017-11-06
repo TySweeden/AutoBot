@@ -1,4 +1,5 @@
 ﻿using mshtml;
+using System.Threading;
 using WebsiteAutomation.Services.WebPageScraper;
 using WebsiteAutomation.Services.WebPageScraper.Actions;
 
@@ -17,7 +18,7 @@ namespace WebsiteAutomation.Services.WebPageAutomation.ExecutionRoutines
             this.PageActions = new PageActions();
         }
 
-        public void Execute()
+        public async void Execute()
         {
             IHTMLElement ParentElement = null;
 

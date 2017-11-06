@@ -21,15 +21,19 @@ namespace WebsiteAutomation.Services.WebPageAutomation
 
         // uMsg param
         private const int WM_SETTEXT = 0x000C;
+        private const int BM_CLICK = 0x00F5;
 
         IntPtr hFileDialog = FindWindow("#32770", "Choose File To Upload");
 
         // does not do anything unless a window is found
         public void SetFilePath()
         {
-            IntPtr hWndFilePathControl = GetDlgItem(hFileDialog, 1148);
+            IntPtr hWndFilePathTextControl = GetDlgItem(hFileDialog, 1148);
+            IntPtr hWndFileOpenButtonControl = GetDlgItem(hFileDialog, 1);
             //HandleRef hrefHwndTarget = new HandleRef(null, hWndFilePathControl);
-            SendMessage(hWndFilePathControl, WM_SETTEXT, 0, @"C:\Users\TylerSE\Desktop\Tyler Sweeden Resume.docx");
+            SendMessage(hWndFilePathTextControl, WM_SETTEXT, 0, @"C:\Users\tsweeden\Desktop\file.docx");
+            SendMessage(hWndFileOpenButtonControl, BM_CLICK, 0, null);
+            //SendMessage(hFileDialog, 0x0111, 00000084, 0);
         }
     }
 }
