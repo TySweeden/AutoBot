@@ -16,19 +16,14 @@ namespace WebsiteAutomation.Services.WebBrowserInstance.ThreadRoutines
             this.URL = URL;
         }
 
-        public Delegate Get()
+        public void Get()
         {
-            return new ThreadStart(() =>
-            {
-                // create instance of webbrowser control -- must run/initialized in STA thread.
-                WebBrowserInstance browserInstance = new WebBrowserInstance();
-                browserInstance.Navigate(URL);
+            // create instance of webbrowser control -- must run/initialized in STA thread.
+            WebBrowserInstance browserInstance = new WebBrowserInstance();
+            browserInstance.Navigate(URL);
 
-                // start the Dispatcher processing to run control
-                System.Windows.Threading.Dispatcher.Run();
-
-                // other routines ..
-            });
+            // start the Dispatcher processing to run control
+            System.Windows.Threading.Dispatcher.Run();
         }
     }
 }
