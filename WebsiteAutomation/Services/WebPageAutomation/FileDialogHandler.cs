@@ -7,33 +7,48 @@ using System.Threading.Tasks;
 
 namespace WebsiteAutomation.Services.WebPageAutomation
 {
-    
+
     public class FileDialogHandler
     {
         [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
         private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr GetDlgItem(IntPtr hWnd, int nChildID);
+        private static extern IntPtr GetDlgItem(IntPtr hWnd, int nChildID);
 
         [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);
+        private static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);
 
         // uMsg param
-        private const int WM_SETTEXT = 0x000C;
-        private const int BM_CLICK = 0x00F5;
+        private int WM_SETTEXT { get; set; }
+        private int BM_CLICK { get; set; }
 
-        IntPtr hFileDialog = FindWindow("#32770", "Choose File To Upload");
+        private IntPtr hFileDialog { get; set; }
 
-        // does not do anything unless a window is found
-        public void SetFilePath()
+        public FileDialogHandler()
         {
-            IntPtr hWndFilePathTextControl = GetDlgItem(hFileDialog, 1148);
-            IntPtr hWndFileOpenButtonControl = GetDlgItem(hFileDialog, 1);
-            //HandleRef hrefHwndTarget = new HandleRef(null, hWndFilePathControl);
-            SendMessage(hWndFilePathTextControl, WM_SETTEXT, 0, String.Format(@"file:///{0}App_Data\{1}", AppDomain.CurrentDomain.BaseDirectory, "file.docx"));
-            SendMessage(hWndFileOpenButtonControl, BM_CLICK, 0, null);
-            //SendMessage(hFileDialog, 0x0111, 00000084, 0);
+            this.WM_SETTEXT = 0x000C;
+            this.BM_CLICK = 0x00F5;
+
+            this.hFileDialog = FindWindow("#32770", "Choose File To Upload");
+        }
+
+        private void SetFilePath()
+        {
+            IntPtr hWndFilePathTextControl = GetDlgItem(this.hFileDialog, 1148);
+            SendMessage(hWndFilePathTextControl, this.WM_SETTEXT, 0, String.Format(@"file:///{0}App_Data\{1}", AppDomain.CurrentDomain.BaseDirectory, "file.docx"));
+        }
+
+        private void SubmitFile()
+        {
+            IntPtr hWndFileOpenButtonControl = GetDlgItem(this.hFileDialog, 1);
+            SendMessage(hWndFileOpenButtonControl, this.BM_CLICK, 0, null);
+        }
+
+        public void Execute()
+        {
+            this.SetFilePath();
+            this.SubmitFile();
         }
     }
 }
