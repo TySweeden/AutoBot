@@ -79,9 +79,11 @@
     <Content Include="App_Data\IndeedApplicationForm1.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\IndeedApplicationForm2.html" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Data\file.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

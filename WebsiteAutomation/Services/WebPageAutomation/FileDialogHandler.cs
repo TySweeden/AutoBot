@@ -31,7 +31,7 @@ namespace WebsiteAutomation.Services.WebPageAutomation
             IntPtr hWndFilePathTextControl = GetDlgItem(hFileDialog, 1148);
             IntPtr hWndFileOpenButtonControl = GetDlgItem(hFileDialog, 1);
             //HandleRef hrefHwndTarget = new HandleRef(null, hWndFilePathControl);
-            SendMessage(hWndFilePathTextControl, WM_SETTEXT, 0, @"C:\Users\tsweeden\Desktop\file.docx");
+            SendMessage(hWndFilePathTextControl, WM_SETTEXT, 0, String.Format(@"file:///{0}App_Data\{1}", AppDomain.CurrentDomain.BaseDirectory, "file.docx"));
             SendMessage(hWndFileOpenButtonControl, BM_CLICK, 0, null);
             //SendMessage(hFileDialog, 0x0111, 00000084, 0);
         }
