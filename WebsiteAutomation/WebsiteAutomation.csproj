@@ -68,8 +68,8 @@
     <Compile Include="Services\WebPageAutomation\Sites\Indeed.cs" />
     <Compile Include="Services\WebPageAutomation\Sites\Monster.cs" />
     <Compile Include="Services\WebPageAutomation\PageAutomation.cs" />
-    <Compile Include="Services\WebPageScraper\Actions\IPageActions.cs" />
-    <Compile Include="Services\WebPageScraper\Actions\PageActions.cs" />
+    <Compile Include="Services\WebPageScraper\Events\IPageEvents.cs" />
+    <Compile Include="Services\WebPageScraper\Events\PageEvents.cs" />
     <Compile Include="Services\WebPageScraper\IPageScraper.cs" />
     <Compile Include="Services\WebPageScraper\PageScraper.cs" />
     <Compile Include="WebBot.cs" />

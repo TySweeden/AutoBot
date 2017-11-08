@@ -1,5 +1,7 @@
 ﻿using mshtml;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 
@@ -14,9 +16,10 @@ namespace WebsiteAutomation.Services.WebPageScraper
             this.Document = HtmlDocument;
         }
 
+
         public IHTMLElement GetElementByText(string TagName, string InnerText)
         {
-            IEnumerable<IHTMLElement> Elements = this.GetElementsByTagName(TagName);
+            IList<IHTMLElement> Elements = this.GetElementsByTagName(TagName);
             IHTMLElement FoundElement = Elements.Where(x => x.innerText.ToLower().Contains(InnerText.ToLower())).FirstOrDefault();
 
             return FoundElement;
@@ -25,10 +28,9 @@ namespace WebsiteAutomation.Services.WebPageScraper
 
         public IHTMLElement GetLabelElement(string InnerText)
         {
-            List<IHTMLElement> Elements = this.GetElementsByTagName("Label");
-            Elements.RemoveAll(x => x.innerText == null);
+            IList<IHTMLElement> Elements = this.GetElementsByTagName("Label");
 
-            System.Diagnostics.Debug.WriteLine("Lables: "+Elements.Count()+ "  InnerText: "+ InnerText);
+            Elements.Remove(Elements.Where(x => x.innerText == null).FirstOrDefault());//.RemoveAll(x => x.innerText == null);
 
             IHTMLElement FoundElement = Elements.Where(x => x.innerText.ToLower().Contains(InnerText.ToLower())).FirstOrDefault();
             Elements.Clear();
@@ -39,10 +41,9 @@ namespace WebsiteAutomation.Services.WebPageScraper
 
         public IHTMLElement GetInputElement(IHTMLElement HtmlNodeContainer)
         {
-            IHTMLElementCollection Children = HtmlNodeContainer.children;
+            IList<IHTMLElement> Elements = this.GetNodeChildren(HtmlNodeContainer);
             
-            List<IHTMLElement> Elements = Children.Cast<IHTMLElement>().ToList();
-            Elements.RemoveAll(x => x.tagName == null);
+            Elements.Remove(Elements.Where(x => x.tagName == null).FirstOrDefault());//.RemoveAll(x => x.tagName == null);
 
             IHTMLElement FoundElement = Elements.Where(x => x.tagName.ToLower().Contains("input")).FirstOrDefault();
 
@@ -50,10 +51,20 @@ namespace WebsiteAutomation.Services.WebPageScraper
         }
 
 
+        public IHTMLElement GetTextAreaElement(IHTMLElement HtmlNodeContainer)
+        {
+            IList<IHTMLElement> Elements = this.GetNodeChildren(HtmlNodeContainer);
+
+            IHTMLElement FoundElement = Elements.Where(x => x.tagName.ToLower().Contains("textarea")).FirstOrDefault();
+
+            return FoundElement;
+        }
+
+
         public IHTMLElement GetButtonElement(string TagName, string InnerText)
         {
-            List<IHTMLElement> Elements = this.GetElementsByTagName(TagName);
-
+            IList<IHTMLElement> Elements = this.GetElementsByTagName(TagName);
+            
             IHTMLElement FoundElement = Elements.Where(x => x.innerText.ToLower().Contains(InnerText.ToLower())).FirstOrDefault();
 
             return FoundElement;
@@ -62,7 +73,7 @@ namespace WebsiteAutomation.Services.WebPageScraper
 
         public IHTMLElement GetFileUploadElement(string TagName)
         {
-            List<IHTMLElement> Elements = this.GetElementsByTagName(TagName);
+            IList<IHTMLElement> Elements = this.GetElementsByTagName(TagName);
 
             IHTMLElement FoundElement = Elements.Where(x => x.getAttribute("type").ToLower().Equals("file")).FirstOrDefault();
 
@@ -76,22 +87,36 @@ namespace WebsiteAutomation.Services.WebPageScraper
         }
 
 
-        public List<IHTMLElement> GetElementsByTagName(string TagName)
+        public IList<IHTMLElement> GetNodeChildren(IHTMLElement HtmlNodeContainer)
+        {
+            IHTMLElementCollection Children = HtmlNodeContainer.children;
+
+            return Children.Cast<IHTMLElement>().ToList();
+        }
+
+
+        public IList<IHTMLElement> GetElementsByTagName(string TagName)
         {
             return this.Document.getElementsByTagName(TagName).Cast<IHTMLElement>().ToList();
         }
 
 
-        public void SetLabelElementText(IHTMLElement HtmlLabelElement, string InnerText)
+        // set element properties
+        public void SetElementInnerText(IHTMLElement HtmlElement, dynamic value)
         {
-            HtmlLabelElement.innerText = InnerText;
+            HtmlElement.innerText = value;
         }
 
+        public void SetValueAttribute(IHTMLElement HtmlElement, dynamic value)
+        {
+            HtmlElement.setAttribute("value", value);
+        }
 
         public void SetInputElementValue(IHTMLElement HtmlInputElement, dynamic value)
         {
-            HtmlInputElement.innerText = value;
-            HtmlInputElement.setAttribute("value", value);
+            this.SetElementInnerText(HtmlInputElement, value);
+            this.SetValueAttribute(HtmlInputElement, value);
         }
+
     }
 }
