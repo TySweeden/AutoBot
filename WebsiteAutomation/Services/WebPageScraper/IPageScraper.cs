@@ -9,16 +9,19 @@ namespace WebsiteAutomation.Services.WebPageScraper
 {
     interface IPageScraper
     {
-        List<IHTMLElement> GetElementsByTagName(string TagName);
+        IList<IHTMLElement> GetElementsByTagName(string TagName);
         IHTMLElement GetElementByText(string TagName, string InnerText);
         IHTMLElement GetLabelElement(string InnerText); // <label>
         IHTMLElement GetInputElement(IHTMLElement HtmlNodeContainer);
+        IHTMLElement GetTextAreaElement(IHTMLElement HtmlNodeContainer);
         IHTMLElement GetButtonElement(string TagName, string InnerText); // <a>, <button>, <input>
         IHTMLElement GetFileUploadElement(string TagName);
 
         IHTMLElement GetParentElement(IHTMLElement HtmlElement);
+        IList<IHTMLElement> GetNodeChildren(IHTMLElement HtmlNodeContainer);
 
-        void SetLabelElementText(IHTMLElement HtmlLabelElement, string InnerText);
+        void SetElementInnerText(IHTMLElement HtmlElement, dynamic value);
+        void SetValueAttribute(IHTMLElement HtmlElement, dynamic value);
         void SetInputElementValue(IHTMLElement HtmlInputElement, dynamic value);
     }
 }

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 using System.Windows.Threading;
 using WebsiteAutomation.Services.WebPageAutomation;
 
-namespace WebsiteAutomation.Services.WebPageScraper.Actions
+namespace WebsiteAutomation.Services.WebPageScraper.Events
 {
-    public class PageActions //: IPageActions
+    public class PageEvents //: IPageActions
     {
         public void InvokeClick(IHTMLElement HtmlElement)
         {
