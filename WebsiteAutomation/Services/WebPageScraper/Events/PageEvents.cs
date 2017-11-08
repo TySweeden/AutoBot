@@ -59,7 +59,7 @@ namespace WebsiteAutomation.Services.WebPageScraper.Events
 
         public void DoSomething()
         {
-            Thread.Sleep(5000); // wait for File Upload Dialog Window to open.
+            Thread.Sleep(500); // wait for File Upload Dialog Window to open.
             System.Diagnostics.Debug.WriteLine("[*] DoSomething");
 
             FileDialogHandler DialogHandler = new FileDialogHandler();

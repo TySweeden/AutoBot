@@ -21,7 +21,7 @@ namespace WebsiteAutomationConsole
 
             WebBot bot = new WebBot(HtmlFilePath);
 
-            bot.VisibleInstance();
+            bot.HiddenInstance();
             //Thread.Sleep(3000); // ensures page loads contents before starting thread routines
             bot.Start();
 

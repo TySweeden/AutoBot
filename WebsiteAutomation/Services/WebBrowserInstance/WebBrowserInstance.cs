@@ -1,8 +1,7 @@
 ﻿using mshtml;
 using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
+using System.Windows.Forms;
 using WebsiteAutomation.Services.WebBrowserInstance.Events;
 
 namespace WebsiteAutomation.Services.WebBrowserInstance
@@ -12,38 +11,45 @@ namespace WebsiteAutomation.Services.WebBrowserInstance
         private WebBrowser wBrowser { get; set; }
         private CompletedEventHandlers CompletedEventHandlers { get; set; }
 
-        private bool _isVisible = false;
-        public bool isVisible { get { return _isVisible; } }
-
         public WebBrowserInstance()
         {
-            CompletedEventHandlers = new CompletedEventHandlers();
+            this.CompletedEventHandlers = new CompletedEventHandlers();
 
             this.InitializeWebBroweserInstance();
         }
 
         private void InitializeWebBroweserInstance()
         {
-            this.wBrowser = new WebBrowser();
+            this.wBrowser = new WebBrowser()
+            {
+                Visible = true,
+                AllowNavigation = true,
+                ScriptErrorsSuppressed = true,
+                Dock = DockStyle.Fill
+            };
 
-            this.wBrowser.Visibility = Visibility.Visible;
-            this.wBrowser.Navigated += new NavigatedEventHandler(CompletedEventHandlers.WebNavigated);
-            this.wBrowser.LoadCompleted += new LoadCompletedEventHandler(CompletedEventHandlers.LoadCompleted);
-
-            this.wBrowser.BeginInit(); // start initialization of WebBrowser Component
+            this.wBrowser.Navigated += new WebBrowserNavigatedEventHandler(this.CompletedEventHandlers.WebNavigated);
+            this.wBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(this.CompletedEventHandlers.LoadCompleted);
         }
 
 
-        public Window CreateWindow()
+        public Form CreateWindow()
         {
-            this._isVisible = true;
-            Window Window = new Window();
-            DockPanel DockPanelContainer = new DockPanel();
-            
-            DockPanelContainer.Children.Add(this.wBrowser);
+            Form Window = new Form()
+            {
+                Width = 1200,
+                Height = 800
+            };
 
-            //Window.Visibility = Visibility.Hidden; 
-            Window.Content = DockPanelContainer;
+            Panel PanelContainer = new Panel()
+            {
+                Visible = true,
+                Dock = DockStyle.Fill
+            };
+
+            PanelContainer.Controls.Add(this.wBrowser);
+            Window.Controls.Add(PanelContainer);
+
             Window.Show();
 
             return Window;
@@ -62,20 +68,7 @@ namespace WebsiteAutomation.Services.WebBrowserInstance
 
         public HTMLDocument GetDocument()
         {
-            HTMLDocument HtmlDocument = null;
-
-            if(this.wBrowser.IsLoaded)
-            {
-                HtmlDocument = (HTMLDocument)this.wBrowser.Document;
-            }
-
-            return HtmlDocument;
-        }
-
-
-        public bool isPageLoaded()
-        {
-            return (bool)this.wBrowser.IsLoaded;
+            return (HTMLDocument)this.wBrowser.Document.DomDocument;
         }
     }
 }
