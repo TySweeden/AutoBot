@@ -87,7 +87,7 @@ namespace WebsiteAutomation.Services.WebPageAutomation.ExecutionRoutines
 
         private void SetResumeFile()
         {
-            this.PageActions.InvokeClick(this.PageScraper.GetFileUploadElement("Input"));
+            this.PageActions.InvokeFileUpload(this.PageScraper.GetFileUploadElement("Input"));
         }
     }
 }
