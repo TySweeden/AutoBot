@@ -14,20 +14,20 @@ namespace WebsiteAutomation.Services.WebPageAutomation
     public class PageAutomation
     {
         private HTMLDocument Document { get; set; }
-        private BasicRoutine BasicAutomationRoutine { get; set; }
+        private CommonRoutine CommonAutomationRoutine { get; set; }
 
         //private PageScraper PageScraper { get; set; }
 
         public PageAutomation(HTMLDocument HtmlDocument)
         {
             this.Document = HtmlDocument;
-            this.BasicAutomationRoutine = new BasicRoutine(HtmlDocument);
+            this.CommonAutomationRoutine = new CommonRoutine(HtmlDocument);
         }
 
-        public void RunBasicRoutine()
+        public void RunCommonAutomationRoutine()
         {
             //System.Threading.Thread.Sleep(1000);
-            this.BasicAutomationRoutine.Execute();
+            this.CommonAutomationRoutine.Execute();
         }
 
         public void GetIndeedRoutine()
