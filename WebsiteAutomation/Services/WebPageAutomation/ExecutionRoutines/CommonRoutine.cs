@@ -7,12 +7,12 @@ using WebsiteAutomation.Services.WebPageScraper.Events;
 
 namespace WebsiteAutomation.Services.WebPageAutomation.ExecutionRoutines
 {
-    public class BasicRoutine
+    public class CommonRoutine: ICommonAutomations
     {
         private PageScraper PageScraper { get; set; }
         private PageEvents PageActions { get; set; }
 
-        public BasicRoutine(HTMLDocument HtmlDocument)
+        public CommonRoutine(HTMLDocument HtmlDocument)
         {
             this.PageScraper = new PageScraper(HtmlDocument);
             this.PageActions = new PageEvents();
@@ -30,62 +30,62 @@ namespace WebsiteAutomation.Services.WebPageAutomation.ExecutionRoutines
         }
 
 
-        private void SetFirstName()
+        public void SetFirstName()
         {
             IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("First"));
             this.PageScraper.SetInputElementValue(this.PageScraper.GetInputElement(ParentElement), "first name here");
         }
 
 
-        private void SetFullMiddleName()
+        public void SetFullMiddleName()
         {
             IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("Middle"));
             this.PageScraper.SetInputElementValue(this.PageScraper.GetInputElement(ParentElement), "middle name here");
         }
 
 
-        private void SetInitialMiddleName()
+        public void SetInitialMiddleName()
         {
             IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("Middle"));
             this.PageScraper.SetInputElementValue(this.PageScraper.GetInputElement(ParentElement), "middle initial here");
         }
 
 
-        private void SetLastName()
+        public void SetLastName()
         {
             IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("Last"));
             this.PageScraper.SetInputElementValue(this.PageScraper.GetInputElement(ParentElement), "last name here");
         }
 
 
-        private void SetEmail()
+        public void SetEmail()
         {
             IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("Email"));
             this.PageScraper.SetInputElementValue(this.PageScraper.GetInputElement(ParentElement), "emailhere@gmail.com");
         }
 
 
-        private void SetPhoneNumber()
+        public void SetPhoneNumber()
         {
             IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("Phone"));
             this.PageScraper.SetInputElementValue(this.PageScraper.GetInputElement(ParentElement), "4055555555");
         }
 
 
-        private void SetCoverLetter()
+        public void SetCoverLetter()
         {
             IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("Cover"));
             this.PageScraper.SetElementInnerText(this.PageScraper.GetTextAreaElement(ParentElement), "Text blob here");
         }
 
 
-        private void SetCoverLetterFile()
+        public void SetCoverLetterFile()
         {
             throw new System.NotImplementedException();
         }
 
 
-        private void SetResumeFile()
+        public void SetResumeFile()
         {
             this.PageActions.InvokeFileUpload(this.PageScraper.GetFileUploadElement("Input"));
         }
