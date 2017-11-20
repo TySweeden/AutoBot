@@ -24,15 +24,8 @@ namespace WebsiteAutomation.Services.WebBrowserInstance.ThreadRoutines
             browserInstance.CreateWindow();
             browserInstance.Navigate(URL);
 
-            //PageAutomation PageAutomation = new PageAutomation(browserInstance.GetDocument());
-            //PageAutomation.RunBasicRoutine();
             // start the Dispatcher processing to run control
             System.Windows.Threading.Dispatcher.Run();
-
-            
-            // other routines ...
-            // PageAutomation BasicRoutine
-            // all site routines ... ?
         }
     }
 }
