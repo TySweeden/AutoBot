@@ -51,6 +51,30 @@ namespace WebsiteAutomation.Services.WebPageScraper
         }
 
 
+        public IHTMLElement GetRadioElement(IHTMLElement HtmlNodeContainer)
+        {
+            IList<IHTMLElement> Elements = this.GetNodeChildren(HtmlNodeContainer);
+
+            Elements.Remove(Elements.Where(x => x.tagName == null).FirstOrDefault());
+
+            IHTMLElement FoundElement = Elements.Where(x => x.tagName.ToLower().Contains("input") && x.getAttribute("type").ToLower().Equals("radio")).FirstOrDefault();
+
+            return FoundElement;
+        }
+
+
+        public IHTMLElement GetDropdownElement(IHTMLElement HtmlNodeContainer)
+        {
+            IList<IHTMLElement> Elements = this.GetNodeChildren(HtmlNodeContainer);
+
+            Elements.Remove(Elements.Where(x => x.tagName == null).FirstOrDefault());
+
+            IHTMLElement FoundElement = Elements.Where(x => x.tagName.ToLower().Contains("select")).FirstOrDefault();
+
+            return FoundElement;
+        }
+
+
         public IHTMLElement GetTextAreaElement(IHTMLElement HtmlNodeContainer)
         {
             IList<IHTMLElement> Elements = this.GetNodeChildren(HtmlNodeContainer);
@@ -116,6 +140,21 @@ namespace WebsiteAutomation.Services.WebPageScraper
         {
             this.SetElementInnerText(HtmlInputElement, value);
             this.SetValueAttribute(HtmlInputElement, value);
+        }
+
+        public void SetRadioValue(IHTMLElement HtmlInputElement)
+        {
+            HtmlInputElement.setAttribute("checked", "true");
+        }
+
+        public void SetDropdownValue(IHTMLElement HtmlSelectElement, dynamic value)
+        {
+            IList<IHTMLElement> Options = this.GetNodeChildren(HtmlSelectElement);
+            Options.Remove(Options.Where(x => x.innerText == null).FirstOrDefault());
+
+            IHTMLElement Option = Options.Where(x => x.innerHTML.ToLower().Contains(value.ToString().ToLower())).FirstOrDefault();
+
+            Option.setAttribute("selected", "true");
         }
 
     }

@@ -14,6 +14,7 @@ namespace WebsiteAutomation.Services.WebPageAutomation.ExecutionRoutines
         void SetLastName();
         void SetEmail();
         void SetPhoneNumber();
+        void SetGender();
         void SetCoverLetter();
         void SetCoverLetterFile();
         void SetResumeFile();

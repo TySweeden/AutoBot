@@ -25,6 +25,11 @@ namespace WebsiteAutomation.Services.WebPageAutomation.ExecutionRoutines
             this.SetLastName();
             this.SetEmail();
             this.SetPhoneNumber();
+            this.SetGender();
+            this.SetEthnicity();
+            this.SetVeteranStatus();
+            this.SetDisabilityStatus();
+
             this.SetCoverLetter();
             this.SetResumeFile();
         }
@@ -71,6 +76,29 @@ namespace WebsiteAutomation.Services.WebPageAutomation.ExecutionRoutines
             this.PageScraper.SetInputElementValue(this.PageScraper.GetInputElement(ParentElement), "4055555555");
         }
 
+        public void SetGender()
+        {
+            IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("Male"));
+            this.PageScraper.SetRadioValue(this.PageScraper.GetRadioElement(ParentElement));
+        }
+
+        public void SetEthnicity()
+        {
+            IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("Ethnicity"));
+            this.PageScraper.SetDropdownValue(this.PageScraper.GetDropdownElement(ParentElement), "White");
+        }
+
+        public void SetVeteranStatus()
+        {
+            IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("I AM NOT A PROTECTED VETERAN"));
+            this.PageScraper.SetRadioValue(this.PageScraper.GetRadioElement(ParentElement));
+        }
+
+        public void SetDisabilityStatus()
+        {
+            IHTMLElement ParentElement = this.PageScraper.GetParentElement(this.PageScraper.GetLabelElement("NO, I DON''T HAVE A DISABILITY"));
+            this.PageScraper.SetRadioValue(this.PageScraper.GetRadioElement(ParentElement));
+        }
 
         public void SetCoverLetter()
         {
